@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cossel | Анкетирование</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="index.html">Главная</a>
+        <a href="pages/catalog.html">Каталог</a>
+        <a href="pages/favorites.html">Избранное</a>
+        <a href="pages/profile.html">Профиль</a>
+      </nav>
+    </header>
+    <main>
+      <form id="quizForm">
+        <div class="quiz-step" data-step="1">
+          <h2>Шаг 1 из 3</h2>
+          <label for="quizCategory">Тип продукта:</label>
+          <select id="quizCategory">
+            <optgroup label="Глаза">
+              <option value="Тушь">Тушь</option>
+              <option value="Тени для век">Палетка теней</option>
+              <option value="Подводка">Подводка</option>
+              <option value="Глиттер">Карандаш для глаз</option>
+            </optgroup>
+
+            <optgroup label="Лицо">
+              <option value="Тональный крем">Тональный крем</option>
+              <option value="Пудра">Пудра</option>
+              <option value="Консилер">Консилер</option>
+              <option value="Румяна">Румяна</option>
+              <option value="Хайлайтер">Хайлайтер</option>
+              <option value="Глиттер">Праймер</option>
+              <option value="Глиттер">Бронзер</option>
+            </optgroup>
+
+            <optgroup label="Губы">
+              <option value="Помада">Помада</option>
+              <option value="Блеск для губ">Блеск для губ</option>
+              <option value="Карандаш для губ">Карандаш для губ</option>
+              <option value="Карандаш для губ">Тинт</option>
+            </optgroup>
+          </select>
+          <button type="button" class="btn-next">Далее</button>
+        </div>
+
+        <div class="quiz-step" data-step="2" style="display: none">
+          <h2>Шаг 2 из 3</h2>
+          <label for="userFeature" id="featureLabel">Особенности: </label>
+          <select id="userFeature" required>
+            <!-- потом дописать вопросы -->
+          </select>
+          <button type="button" class="btn-prev">Назад</button>
+          <button type="button" class="btn-next">Далее</button>
+        </div>
+
+        <div class="quiz-step" data-step="3" style="display: none">
+          <h2>Шаг 3 из 3</h2>
+          <fieldset>
+            <legend>
+              Какие компоненты вы не переносите (если такие есть)?
+            </legend>
+            <label><input type="checkbox" value="paraben" /> Парабены</label>
+            <label><input type="checkbox" value="sulfate" /> Сульфаты</label>
+            <label><input type="checkbox" value="fragrance" /> Отдушки</label>
+            <label><input type="checkbox" value="alcohol" /> Спирт</label>
+          </fieldset>
+          <button type="button" class="btn-prev">Назад</button>
+          <button type="submit" class="btn-primary">Готово</button>
+        </div>
+      </form>
+
+      <div id="quizResult" class="quiz-result"></div>
+    </main>
+    <script src="js/main.js"></script>
+  </body>
+</html>
