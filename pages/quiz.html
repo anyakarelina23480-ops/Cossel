@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cossel | Анкетирование</title>
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
   </head>
   <body>
     <header>
       <nav>
-        <a href="../index.html">Главная</a>
-        <a href="catalog.html">Каталог</a>
-        <a href="favorites.html">Избранное</a>
+        <a href="../index.html"><i class="fa-solid fa-house"></i>Главная</a>
+        <a href="catalog.html"><i class="fa-solid fa-list-ul"></i>Каталог</a>
+        <a href="favorites.html"><i class="fa-regular fa-bookmark"></i>Избранное</a>
       </nav>
     </header>
     <main>
@@ -45,7 +47,7 @@
               <option value="Тинт">Тинт</option>
             </optgroup>
           </select>
-          <button type="button" class="btn-next">Далее</button>
+          <button type="button" class="button-next">Далее</button>
         </div>
 
         <div class="quiz-step" data-step="2" style="display: none">
@@ -55,8 +57,8 @@
 
             <!-- JS будет подставлять вопрос и варианты ответа -->
           </fieldset>
-          <button type="button" class="btn-prev">Назад</button>
-          <button type="button" class="btn-next">Далее</button>
+          <button type="button" class="button-prev">Назад</button>
+          <button type="button" class="button-next">Далее</button>
         </div>
 
         <div class="quiz-step" data-step="3" style="display: none">
@@ -70,8 +72,8 @@
             <label><input type="checkbox" value="fragrance" /> Отдушки</label>
             <label><input type="checkbox" value="alcohol" /> Спирт</label>
           </fieldset>
-          <button type="button" class="btn-prev">Назад</button>
-          <button type="submit" class="btn-primary">Готово</button>
+          <button type="button" class="button-prev">Назад</button>
+          <button type="submit" class="button-next">Готово</button>
         </div>
       </form>
 

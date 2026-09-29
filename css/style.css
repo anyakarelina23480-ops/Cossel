@@ -1,4 +1,5 @@
 body {
+    background-color: #d9e5e9;
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -13,16 +14,20 @@ footer {
 }
 footer p {
     margin: 5px 0;
+    color: #6091a1;
 }
 nav {
     display: flex;
-    gap: 20px;
-    padding: 20px;
+    justify-content: flex-end;
+    gap: 60px;
+    padding: 25px;
 }
 nav a {
     text-decoration: none;
+    color: #366372;
 }
 .mainpage {
+    color: #366372;
     font-family: Georgia, serif;
     text-align: center;
 }
@@ -31,6 +36,7 @@ nav a {
     font-weight: 400;
     font-size: 100px;
     margin-bottom: 60px;
+    color: #1e4b5a;
 }
 .maintext {
     font-size: 30px;
@@ -50,6 +56,7 @@ nav a {
 .mainpage input {
     font-family: Georgia, serif;
     font-size: 20px;
+    border: 2px solid #aa81a1;
 }
 .button-chooseproduct {
     font-family: Georgia, serif;
@@ -58,4 +65,7 @@ nav a {
     padding: 30px;
     border-radius: 14px;
     width: 500px;
+    border-color: #aa81a1;
+    background-color: #f7e3ea;
+    color: #aa81a1;
 }
