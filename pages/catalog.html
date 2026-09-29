@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cossel | Каталог</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="../index.html">Главная</a>
+        <a href="catalog.html">Каталог</a>
+        <a href="favorites.html">Избранное</a>
+      </nav>
+    </header>
+    <main>
+      <section class="catalog-section">
+        <h1>Каталог</h1>
+
+        <!-- Фильтры -->
+        <div class="filters">
+          <input type="text" id="search" placeholder="Поиск по названию..." />
+
+          <select id="filterCategory">
+            <optgroup label="Глаза">
+              <option value="Тушь">Тушь</option>
+              <option value="Тени для век">Палетка теней</option>
+              <option value="Подводка">Подводка</option>
+              <option value="Глиттер">Карандаш для глаз</option>
+            </optgroup>
+
+            <optgroup label="Лицо">
+              <option value="Тональный крем">Тональный крем</option>
+              <option value="Пудра">Пудра</option>
+              <option value="Консилер">Консилер</option>
+              <option value="Румяна">Румяна</option>
+              <option value="Хайлайтер">Хайлайтер</option>
+              <option value="Глиттер">Праймер</option>
+              <option value="Глиттер">Бронзер</option>
+            </optgroup>
+
+            <optgroup label="Губы">
+              <option value="Помада">Помада</option>
+              <option value="Блеск для губ">Блеск для губ</option>
+              <option value="Карандаш для губ">Карандаш для губ</option>
+              <option value="Карандаш для губ">Тинт</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- Каталог (JS заполнит карточками) -->
+        <div id="catalog" class="catalog-grid">
+          <!-- Карточки товаров -->
+        </div>
+
+        <!-- Сообщение, если ничего не найдено -->
+        <div id="catalogEmpty" class="empty-message" style="display: none">
+          <p>По вашему запросу ничего не найдено.</p>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>© 2026 Cossel</p>
+      <p>Сервис индивидуального подбора косметических средств.</p>
+    </footer>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
