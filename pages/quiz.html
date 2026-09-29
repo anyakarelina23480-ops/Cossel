@@ -19,12 +19,13 @@
         <div class="quiz-step" data-step="1">
           <h2>Шаг 1 из 3</h2>
           <label for="quizCategory">Тип продукта:</label>
-          <select id="quizCategory">
+          <select id="quizCategory" required>
+            <option value="" selected disabled hidden>Выберите продукт</option>
             <optgroup label="Глаза">
               <option value="Тушь">Тушь</option>
-              <option value="Тени для век">Палетка теней</option>
+              <option value="Тени для век">Тени для век</option>
               <option value="Подводка">Подводка</option>
-              <option value="Глиттер">Карандаш для глаз</option>
+              <option value="Карандаш для глаз">Карандаш для глаз</option>
             </optgroup>
 
             <optgroup label="Лицо">
@@ -33,15 +34,15 @@
               <option value="Консилер">Консилер</option>
               <option value="Румяна">Румяна</option>
               <option value="Хайлайтер">Хайлайтер</option>
-              <option value="Глиттер">Праймер</option>
-              <option value="Глиттер">Бронзер</option>
+              <option value="Праймер">Праймер</option>
+              <option value="Бронзер">Бронзер</option>
             </optgroup>
 
             <optgroup label="Губы">
               <option value="Помада">Помада</option>
               <option value="Блеск для губ">Блеск для губ</option>
               <option value="Карандаш для губ">Карандаш для губ</option>
-              <option value="Карандаш для губ">Тинт</option>
+              <option value="Тинт">Тинт</option>
             </optgroup>
           </select>
           <button type="button" class="btn-next">Далее</button>
@@ -49,10 +50,11 @@
 
         <div class="quiz-step" data-step="2" style="display: none">
           <h2>Шаг 2 из 3</h2>
-          <label for="userFeature" id="featureLabel">Особенности: </label>
-          <select id="userFeature" required>
-            <!-- потом дописать вопросы -->
-          </select>
+          <fieldset id="featureQuestion">
+            <legend id="featureLabel">Особенности</legend>
+
+            <!-- JS будет подставлять вопрос и варианты ответа -->
+          </fieldset>
           <button type="button" class="btn-prev">Назад</button>
           <button type="button" class="btn-next">Далее</button>
         </div>
@@ -76,8 +78,8 @@
       <div id="quizResult" class="quiz-result"></div>
     </main>
     <footer>
-    <p>© 2026 Cossel</p>
-    <p>Сервис индивидуального подбора косметических средств.</p>
+      <p>© 2026 Cossel</p>
+      <p>Сервис индивидуального подбора косметических средств.</p>
     </footer>
     <script src="../js/main.js"></script>
   </body>
