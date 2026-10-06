@@ -4,6 +4,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: "Courier New", monospace;
 }
 main {
     flex: 1;
@@ -90,7 +91,6 @@ nav a {
         opacity: 0;
         transform: translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -164,3 +164,76 @@ fieldset {
     transform: translateY(3px);
 }
 
+
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 40px;
+    color: #1e4b5a;
+}
+.favorites-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    color: #366372;
+}
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(250px, 1fr)
+    );
+    gap: 25px;
+}
+.product-card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+.catalog-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    color: #366372;
+}
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+#search {
+    width: 500px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 2px solid #aa81a1;
+    font-family: "Courier New", monospace;
+    font-size: 20px;
+    color: #366372;
+}
+
+#search:focus {
+    outline: none;
+}
+#filterCategory {
+    width: 300px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 2px solid #aa81a1;
+    font-family: "Courier New", monospace;
+    font-size: 18px;
+    color: #366372;
+}
+#filterCategory:focus {
+    outline: none;
+}
