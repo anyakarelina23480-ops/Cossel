@@ -237,3 +237,45 @@ h1 {
 #filterCategory:focus {
     outline: none;
 }
+
+
+
+.product-section {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 40px;
+}
+.product-detail {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    color: #366372;
+}
+.product-detail img {
+    width: 300px;
+    max-width: 100%;
+    border-radius: 16px;
+    margin-bottom: 30px;
+}
+.product-detail p {
+    font-size: 20px;
+    margin: 15px 0;
+}
+.product-detail button {
+    margin-top: 30px;
+    padding: 15px 30px;
+    border-radius: 14px;
+    border: 2px solid #aa81a1;
+    background-color: #f7e3ea;
+    color: #aa81a1;
+    font-family: "Courier New", monospace;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.product-detail button:hover {
+    background-color: #aa81a1;
+    color: white;
+    transform: translateY(3px);
+}
