@@ -12,7 +12,6 @@ main {
 footer {
     text-align: center;
     margin-bottom: 20px;
-    font-family: Courier New, monospace;
 }
 footer p {
     margin: 5px 0;
@@ -23,7 +22,6 @@ nav {
     justify-content: flex-end;
     gap: 60px;
     padding: 25px;
-    font-family: Courier New, monospace;
 }
 nav a {
     text-decoration: none;
@@ -31,7 +29,6 @@ nav a {
 }
 .mainpage {
     color: #366372;
-    font-family: Courier New, monospace;
     text-align: center;
 }
 .mainpage h1 {
@@ -57,10 +54,7 @@ nav a {
     padding: 10px;
     border-radius: 14px;
     margin-bottom: 60px;
-}
-#userName:focus {
-    outline: none;
-}    
+}  
 .mainpage input {
     font-family: Courier New, monospace;
     font-size: 20px;
@@ -81,11 +75,6 @@ nav a {
     transform: translateY(0);
     transition: 0.3s;
 }
-.button-chooseproduct:hover {
-    background-color: #aa81a1;
-    color: #ffffff;
-    transform: translateY(5px);
-}
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -101,15 +90,11 @@ nav a {
     animation: fadeIn 1s ease forwards;
     animation-delay: 1s;
 }
-
 .maintext:nth-of-type(2) {
     opacity: 0;
     animation: fadeIn 1s ease forwards;
     animation-delay: 1.5s;
 }
-
-
-
 #quizForm {
     max-width: 800px;
     margin: 50px auto;
@@ -117,7 +102,6 @@ nav a {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     text-align: center;
-    font-family: Courier New, monospace;
     color: #366372;
 }
 .quiz-step h2 {
@@ -134,9 +118,6 @@ nav a {
     font-size: 18px;
     color: #366372;
 }
-#quizCategory:focus {
-    outline: none;
-}  
 fieldset {
     border: 2px solid #aa81a1;
     border-radius: 16px;
@@ -157,22 +138,14 @@ fieldset {
     cursor: pointer;
     transition: 0.3s;
 }
-.button-next:hover,
-.button-prev:hover {
-    background-color: #aa81a1;
-    color: white;
-    transform: translateY(3px);
-}
-
-
-
 h1 {
     text-align: center;
     font-size: 40px;
     margin-bottom: 40px;
     color: #1e4b5a;
 }
-.favorites-section {
+.favorites-section,
+.catalog-section  {
     max-width: 1200px;
     margin: 50px auto;
     padding: 40px;
@@ -195,16 +168,6 @@ h1 {
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-
-
-.catalog-section {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 40px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    color: #366372;
-}
 .filters {
     display: flex;
     justify-content: center;
@@ -221,10 +184,6 @@ h1 {
     font-size: 20px;
     color: #366372;
 }
-
-#search:focus {
-    outline: none;
-}
 #filterCategory {
     width: 300px;
     padding: 12px;
@@ -234,12 +193,6 @@ h1 {
     font-size: 18px;
     color: #366372;
 }
-#filterCategory:focus {
-    outline: none;
-}
-
-
-
 .product-section {
     max-width: 1000px;
     margin: 50px auto;
@@ -274,6 +227,16 @@ h1 {
     cursor: pointer;
     transition: 0.3s;
 }
+#userName:focus,
+#quizCategory:focus,
+#search:focus,
+#filterCategory:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(170, 129, 161, 0.5);
+}
+.button-chooseproduct:hover,
+.button-next:hover,
+.button-prev:hover,
 .product-detail button:hover {
     background-color: #aa81a1;
     color: white;
