@@ -62,50 +62,42 @@ const products = [
   },
 ];
 
-// избранное
-// localStorage — встроенное хранилище браузера, cохраняет данные между сессиями
+// избранное; localStorage — встроенное хранилище браузера, cохраняет данные между сессиями. Решение, пока нет БД
 function getFavorites() {
   return JSON.parse(localStorage.getItem("favorites")) || [];
 }
-
 function saveFavorites(favorites) {
   localStorage.setItem("favorites", JSON.stringify(favorites));
 }
-
+// добавление и удаление из избранного
 function toggleFavorite(productId) {
   let favorites = getFavorites();
   const id = Number(productId);
-
   if (favorites.includes(id)) {
     favorites = favorites.filter((fav) => fav !== id);
   } else {
     favorites.push(id);
   }
-
   saveFavorites(favorites);
   updateFavoritesCount();
   return favorites.includes(id);
 }
-
+// счётчик в избранном
 function updateFavoritesCount() {
   const count = getFavorites().length;
   document
-    .querySelectorAll("#favoritesCount, .favorites-count")
+    .querySelectorAll("#favoritesCount")
     .forEach((el) => {
       el.textContent = `(${count})`;
     });
 }
 
-// ========================================
-// 3. РЕНДЕР КАРТОЧЕК
-// ========================================
-
+// шаблон карточки товара
 function createProductCard(product) {
   const isFav = getFavorites().includes(product.id);
-
   return `
         <article class="product-card" data-id="${product.id}">
-            <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+            <img src="${product.image}" alt="${product.name}">
             <span class="product-brand">${product.brand}</span>
             <h3>${product.name}</h3>
             <span class="product-category">${product.category}</span>
@@ -118,39 +110,32 @@ function createProductCard(product) {
         </article>
     `;
 }
-
+// создаёт на странице все карточки
 function renderProducts(list, containerId = "catalog") {
   const container = document.getElementById(containerId);
   if (!container) return;
-
   if (list.length === 0) {
     container.innerHTML = "";
     const emptyMsg = document.getElementById("catalogEmpty");
     if (emptyMsg) emptyMsg.style.display = "block";
     return;
   }
-
   const emptyMsg = document.getElementById("catalogEmpty");
   if (emptyMsg) emptyMsg.style.display = "none";
 
   container.innerHTML = list.map(createProductCard).join("");
 }
 
-// ========================================
-// 4. КАТАЛОГ — ПОИСК И ФИЛЬТР
-// ========================================
-
+// запуск каталога
 function initCatalog() {
   const catalog = document.getElementById("catalog");
   if (!catalog) return;
-
   const searchInput = document.getElementById("search");
   const categoryFilter = document.getElementById("filterCategory");
-
+  // фильтр и вывод результатов
   function applyFilters() {
     const query = (searchInput?.value || "").toLowerCase().trim();
     const category = categoryFilter?.value || "";
-
     const filtered = products.filter((p) => {
       const matchesSearch =
         !query ||
@@ -159,29 +144,21 @@ function initCatalog() {
       const matchesCategory = !category || p.category === category;
       return matchesSearch && matchesCategory;
     });
-
     renderProducts(filtered);
   }
-
+  // срабатывание фильтра при смене категории или ввода символов в поиске
   if (searchInput) searchInput.addEventListener("input", applyFilters);
   if (categoryFilter) categoryFilter.addEventListener("change", applyFilters);
-
   renderProducts(products);
 }
 
-// ========================================
-// 5. ИЗБРАННОЕ — СТРАНИЦА
-// ========================================
-
+// запуск избранного
 function initFavoritesPage() {
   const container = document.getElementById("favorites");
   if (!container) return;
-
   const favorites = getFavorites();
   const favoriteProducts = products.filter((p) => favorites.includes(p.id));
-
   const emptyMsg = document.getElementById("favoritesEmpty");
-
   if (favoriteProducts.length === 0) {
     container.innerHTML = "";
     if (emptyMsg) emptyMsg.style.display = "block";
@@ -191,25 +168,24 @@ function initFavoritesPage() {
   }
 }
 
-// ========================================
-// 6. СТРАНИЦА ТОВАРА
-// ========================================
-
+// запуск страницы продукта
 function initProductPage() {
   const container = document.getElementById("productDetail");
   if (!container) return;
-
   const params = new URLSearchParams(window.location.search);
   const productId = Number(params.get("id"));
-
   let product = products.find((p) => p.id === productId);
-  if (!product) product = products[0];
-
+  if (!product) {
+    container.innerHTML = `
+        <h1>Товар не найден</h1>
+        <a href="catalog.html" class="btn-primary">← Вернуться в каталог</a>
+    `;
+    return;
+  }
   const isFav = getFavorites().includes(product.id);
-
   container.innerHTML = `
         <h1>${product.name}</h1>
-        <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">
+        <img src="${product.image}" alt="${product.name}">
         <p><strong>Категория:</strong> ${product.category}</p>
         <p><strong>Бренд:</strong> ${product.brand}</p>
         <p><strong>Тип:</strong> ${product.type.join(", ")}</p>
@@ -222,13 +198,11 @@ function initProductPage() {
     `;
 }
 
-// ========================================
-// 7. WIZARD В QUIZ
-// ========================================
-
+// анкетирование
+// текущий шаг и шагов всего
 let currentStep = 1;
 const totalSteps = 3;
-
+// показываем шаги по очереди, не все сразу
 function showStep(step) {
   document.querySelectorAll(".quiz-step").forEach((el) => {
     el.style.display = "none";
@@ -237,25 +211,18 @@ function showStep(step) {
   if (current) current.style.display = "block";
   currentStep = step;
 }
-
+// второй шаг
 function buildStep2(category) {
   const fieldset = document.getElementById("featureQuestion");
   const label = document.getElementById("featureLabel");
   if (!fieldset || !label) return;
-
+  // текст вопроса и варианты ответа в зависимости от выбора на шаге 1
   let question = "";
   let options = [];
-
-  const eyeCategories = [
-    "Тушь",
-    "Тени для век",
-    "Подводка",
-    "Карандаш для глаз",
-  ];
-  const faceCategories = ["Тональный крем", "Пудра", "Консилер", "Праймер"];
-  const toneCategories = ["Румяна", "Хайлайтер", "Бронзер"];
+  const eyeCategories = ["Тушь", "Тени для век", "Подводка", "Карандаш для глаз"];
+  const faceCategories = ["Тональный крем", "Пудра", "Консилер", "Праймер", "Румяна", "Хайлайтер", "Бронзер"];
   const lipCategories = ["Помада", "Блеск для губ", "Карандаш для губ", "Тинт"];
-
+  //вопрос и варианты ответа
   if (eyeCategories.includes(category)) {
     question = "Насколько чувствительны ваши глаза?";
     options = [
@@ -271,51 +238,38 @@ function buildStep2(category) {
       { value: "normal", label: "Нормальная" },
       { value: "combination", label: "Комбинированная" },
     ];
-  } else if (toneCategories.includes(category)) {
-    question = "Какой у вас тон кожи?";
-    options = [
-      { value: "light", label: "Светлый" },
-      { value: "medium", label: "Средний" },
-      { value: "dark", label: "Тёмный" },
-    ];
   } else if (lipCategories.includes(category)) {
-    question = "Насколько чувствительны ваши губы?";
+    question = "Какое состояние ваших губ?";
     options = [
-      { value: "high", label: "Очень чувствительные" },
-      { value: "medium", label: "Средние" },
-      { value: "low", label: "Не чувствительные" },
+      { value: "high", label: "Сухие" },
+      { value: "medium", label: "Нормальные" },
+      { value: "low", label: "Увлажнённые" },
     ];
   }
-
   label.textContent = question;
-
-  // Удаляем старые radio
+  // удаление старых вариантов ответа, если пользователь захочет поменять категорию
   fieldset.querySelectorAll("label").forEach((el) => el.remove());
-
   options.forEach((opt) => {
     const labelEl = document.createElement("label");
     labelEl.innerHTML = `<input type="radio" name="step2Answer" value="${opt.value}" required> ${opt.label}`;
     fieldset.appendChild(labelEl);
   });
 }
-
+// запуск анкетирования
 function initQuiz() {
   const form = document.getElementById("quizForm");
   if (!form) return;
-
   const categorySelect = document.getElementById("quizCategory");
   const nextButtons = document.querySelectorAll(".button-next");
   const prevButtons = document.querySelectorAll(".button-prev");
-
   nextButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      // Валидация текущего шага
+      // проверка на заполнение полей
       const stepEl = document.querySelector(
         `.quiz-step[data-step="${currentStep}"]`,
       );
       const requiredFields = stepEl.querySelectorAll("[required]");
       let valid = true;
-
       requiredFields.forEach((field) => {
         if (field.type === "radio") {
           const name = field.name;
@@ -325,47 +279,36 @@ function initQuiz() {
           valid = false;
         }
       });
-
       if (!valid) {
-        alert("Пожалуйста, заполните все поля");
+        alert("Заполните все поля");
         return;
       }
-
-      // Если уходим со шага 1 — строим шаг 2
       if (currentStep === 1) {
         buildStep2(categorySelect.value);
       }
-
       if (currentStep < totalSteps) {
         showStep(currentStep + 1);
       }
     });
   });
-
   prevButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       if (currentStep > 1) showStep(currentStep - 1);
     });
   });
-
-  // Submit — финальный шаг
+  // обработчик кнопки готово
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
     const category = categorySelect.value;
     const step2 = document.querySelector('input[name="step2Answer"]:checked');
     const allergies = Array.from(
       form.querySelectorAll('input[type="checkbox"]:checked'),
     ).map((cb) => cb.value);
-
-    // Фильтрация товаров
+    // только товары с выбранной категорией
     let matched = products.filter((p) => p.category === category);
-
-    // Показываем результат
     const result = document.getElementById("quizResult");
     const userName = localStorage.getItem("userName") || "";
     const greeting = userName ? `${userName}, мы подобрали для вас:` : "Мы подобрали для вас:";
-
     if (matched.length === 0) {
       result.innerHTML = `
         <h2>К сожалению, ничего не найдено</h2>
@@ -380,70 +323,52 @@ function initQuiz() {
         </div>
     `;
     }
-
     form.style.display = "none";
   });
 }
 
-// ========================================
-// 8. ИМЯ НА ГЛАВНОЙ
-// ========================================
-
+// имя пользователя на главной странице
 function initMainPage() {
   const input = document.getElementById("userName");
   if (!input) return;
-
+  // подставить имя в поле
   const savedName = localStorage.getItem("userName");
   if (savedName) {
     input.value = savedName;
   }
-
+  // сохранение имени при вводе
   input.addEventListener("input", () => {
     localStorage.setItem("userName", input.value);
   });
 }
 
-// ========================================
-// 9. КЛИКИ НА КНОПКИ ИЗБРАННОГО
-// ========================================
-
+// обработчик нажатий на кнопку избранного
 document.addEventListener("click", (e) => {
   const favBtn = e.target.closest(".btn-favorite, .btn-favorite-icon");
   if (!favBtn) return;
   e.preventDefault();
-
   const id = favBtn.dataset.id;
   if (!id) return;
-
   const isNowFav = toggleFavorite(id);
-
-  // Обновляем текст кнопки — 3 случая
+  // обновление текста 
   if (favBtn.tagName === "BUTTON") {
     const text = favBtn.textContent.trim();
-
     if (text.includes("Добавить")) {
-      // Был "Добавить в избранное" → теперь "Удалить из избранного"
       favBtn.textContent = "♥ Удалить из избранного";
     } else if (text.includes("Удалить")) {
-      // Был "Удалить из избранного" → теперь "Добавить в избранное"
       favBtn.textContent = "♡ Добавить в избранное";
     } else {
-      // Короткая версия для карточек (только символ)
       favBtn.textContent = isNowFav ? "♥" : "♡";
     }
   }
-
+  // меняет цвет маленькой кнопки
   favBtn.classList.toggle("active", isNowFav);
-
-  // Если на странице избранного — перерисовать
+  // обновление списка продуктов в избранном
   const favContainer = document.getElementById("favorites");
   if (favContainer) initFavoritesPage();
 });
 
-// ========================================
-// 10. ИНИЦИАЛИЗАЦИЯ
-// ========================================
-
+// инициализация
 document.addEventListener("DOMContentLoaded", () => {
   initMainPage();
   initCatalog();
