@@ -138,6 +138,11 @@ fieldset {
     cursor: pointer;
     transition: 0.3s;
 }
+.button-prev {
+    border: 2px solid #e2bcda;
+    background-color: #fff4f8;
+    color: #aa81a1;;
+}
 h1 {
     text-align: center;
     font-size: 40px;
@@ -242,10 +247,107 @@ h1 {
     color: white;
     transform: translateY(3px);
 }
+.button-prev:hover {
+    background-color: #e2bcda;
+}
 .product-card img {
     width: 100%;
     height: 240px;
     object-fit: cover;
     border-radius: 12px;
     margin-bottom: 15px;
+}
+
+.product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+.btn-details {
+    flex: 1;
+    padding: 10px 16px;
+    border: 2px solid #aa81a1;
+    border-radius: 12px;
+    background-color: #f7e3ea;
+    color: #aa81a1;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-details:hover {
+    background-color: #aa81a1;
+    color: white;
+    transform: translateY(2px);
+}
+.btn-favorite-icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 2px solid #aa81a1;
+    border-radius: 12px;
+    background-color: #f7e3ea;
+    color: #aa81a1;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    flex-shrink: 0;
+}
+.btn-favorite-icon:hover {
+    background-color: #aa81a1;
+    color: white;
+    transform: translateY(-2px);
+}
+.btn-favorite-icon.active {
+    background-color: #aa81a1;
+    color: white;
+}
+.btn-secondary {
+    display: inline-block;
+    margin-top: 15px;
+    margin-left: 10px;
+    padding: 15px 30px;
+    border-radius: 14px;
+    border: 2px solid #e2bcda;
+    background-color: #fff4f8;
+    color: #aa81a1;;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-secondary:hover {
+    background-color: #e2bcda;
+    color: white;
+    transform: translateY(3px);
+}
+.btn-primary {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    border-radius: 14px;
+    border: 2px solid #aa81a1;
+    background-color: #f7e3ea;
+    color: #aa81a1;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-primary:hover {
+    background-color: #aa81a1;
+    color: white;
+    transform: translateY(3px);
 }

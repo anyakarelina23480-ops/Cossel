@@ -98,11 +98,9 @@ function createProductCard(product) {
             <span class="product-brand">${product.brand}</span>
             <h3>${product.name}</h3>
             <span class="product-category">${product.category}</span>
-            <p class="product-price">${product.price} ₽</p>
-            <p class="product-rating">★ ${product.rating}</p>
             <div class="product-actions">
                 <a href="product.html?id=${product.id}" class="btn-details">Подробнее</a>
-                <button class="btn-favorite ${isFav ? 'active' : ''}" data-id="${product.id}">
+                <button class="btn-favorite-icon ${isFav ? 'active' : ''}" data-id="${product.id}">
                     ${isFav ? '♥' : '♡'}
                 </button>
             </div>
@@ -384,7 +382,7 @@ function initMainPage() {
 // ========================================
 
 document.addEventListener("click", (e) => {
-    const favBtn = e.target.closest(".btn-favorite");
+    const favBtn = e.target.closest(".btn-favorite, .btn-favorite-icon");
     if (!favBtn) return;
     e.preventDefault();
 
