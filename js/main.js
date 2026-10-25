@@ -62,6 +62,14 @@ const products = [
   },
 ];
 
+// Словарь для поиска аллергенов в составе
+const allergenKeywords = {
+  paraben: ["paraben"],
+  sulfate: ["sulfate", "sulphate"],
+  parfum: ["parfum", "fragrance", "aroma", "perfume"],
+  alcohol: ["alcohol", "ethanol", "alcohol denat.", "ethyl alcohol"]
+};
+
 // избранное; localStorage — встроенное хранилище браузера, cохраняет данные между сессиями. Решение, пока нет БД
 function getFavorites() {
   return JSON.parse(localStorage.getItem("favorites")) || [];
@@ -226,24 +234,24 @@ function buildStep2(category) {
   if (eyeCategories.includes(category)) {
     question = "Насколько чувствительны ваши глаза?";
     options = [
-      { value: "high", label: "Очень чувствительные" },
-      { value: "medium", label: "Средние" },
-      { value: "low", label: "Не чувствительные" },
+      { value: "чувствительные", label: "Чувствительные" },
+      { value: "средние", label: "Средние" },
+      { value: "нормальные", label: "Не чувствительные" },
     ];
   } else if (faceCategories.includes(category)) {
     question = "Какой у вас тип кожи?";
     options = [
-      { value: "dry", label: "Сухая" },
-      { value: "oily", label: "Жирная" },
-      { value: "normal", label: "Нормальная" },
-      { value: "combination", label: "Комбинированная" },
+      { value: "сухая", label: "Сухая" },
+      { value: "жирная", label: "Жирная" },
+      { value: "нормальная", label: "Нормальная" },
+      { value: "комбинированная", label: "Комбинированная" },
     ];
   } else if (lipCategories.includes(category)) {
     question = "Какое состояние ваших губ?";
     options = [
-      { value: "high", label: "Сухие" },
-      { value: "medium", label: "Нормальные" },
-      { value: "low", label: "Увлажнённые" },
+      { value: "сухие", label: "Сухие" },
+      { value: "нормальные", label: "Нормальные" },
+      { value: "увлажнённые", label: "Увлажнённые" },
     ];
   }
   label.textContent = question;
@@ -255,6 +263,16 @@ function buildStep2(category) {
     fieldset.appendChild(labelEl);
   });
 }
+// Экранирование HTML-символов для безопасного вывода имени пользователя
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
 // запуск анкетирования
 function initQuiz() {
   const form = document.getElementById("quizForm");
@@ -262,14 +280,15 @@ function initQuiz() {
   const categorySelect = document.getElementById("quizCategory");
   const nextButtons = document.querySelectorAll(".button-next");
   const prevButtons = document.querySelectorAll(".button-prev");
+
+  // 1. Обработчик кнопок "Далее" (ОН БЫЛ УДАЛЕН, ВОЗВРАЩАЕМ)
   nextButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      // проверка на заполнение полей
-      const stepEl = document.querySelector(
-        `.quiz-step[data-step="${currentStep}"]`,
-      );
+      // Проверка заполнения полей текущего шага
+      const stepEl = document.querySelector(`.quiz-step[data-step="${currentStep}"]`);
       const requiredFields = stepEl.querySelectorAll("[required]");
       let valid = true;
+      
       requiredFields.forEach((field) => {
         if (field.type === "radio") {
           const name = field.name;
@@ -279,49 +298,76 @@ function initQuiz() {
           valid = false;
         }
       });
+
       if (!valid) {
         alert("Заполните все поля");
         return;
       }
+
+      // Строим шаг 2, если уходим с 1-го
       if (currentStep === 1) {
         buildStep2(categorySelect.value);
       }
+      
+      // Переключаем шаг
       if (currentStep < totalSteps) {
         showStep(currentStep + 1);
       }
     });
   });
+
+  // 2. Обработчик кнопок "Назад"
   prevButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       if (currentStep > 1) showStep(currentStep - 1);
     });
   });
-  // обработчик кнопки готово
+
+  // 3. Обработчик кнопки "Готово" (submit)
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    
     const category = categorySelect.value;
-    const step2 = document.querySelector('input[name="step2Answer"]:checked');
+    const step2Checked = document.querySelector('input[name="step2Answer"]:checked');
+    const step2Value = step2Checked ? step2Checked.value : null;
+    
     const allergies = Array.from(
       form.querySelectorAll('input[type="checkbox"]:checked'),
     ).map((cb) => cb.value);
-    // только товары с выбранной категорией
-    let matched = products.filter((p) => p.category === category);
+
+    // ФИЛЬТРАЦИЯ (категория + тип + аллергии)
+    let matched = products.filter((p) => {
+      if (p.category !== category) return false;
+
+      if (step2Value && !p.type.includes(step2Value)) return false; 
+
+      if (allergies.length > 0) {
+        const ingredients = p.ingredients.toLowerCase();
+        const hasAllergen = allergies.some((allergen) =>
+          (allergenKeywords[allergen] || []).some((keyword) => ingredients.includes(keyword))
+        );
+        if (hasAllergen) return false;
+      }
+      return true;
+    });
+
     const result = document.getElementById("quizResult");
     const userName = localStorage.getItem("userName") || "";
-    const greeting = userName ? `${userName}, мы подобрали для вас:` : "Мы подобрали для вас:";
+    const greeting = userName ? `${escapeHTML(userName)}, мы подобрали для вас:` : "Мы подобрали для вас:";
+
     if (matched.length === 0) {
       result.innerHTML = `
         <h2>К сожалению, ничего не найдено</h2>
-        <p>Попробуйте выбрать другую категорию.</p>
+        <p>Попробуйте изменить параметры подбора.</p>
         <a href="catalog.html" class="btn-primary">Перейти в каталог</a>
-    `;
+      `;
     } else {
       result.innerHTML = `
         <h2>${greeting}</h2>
         <div class="catalog-grid">
             ${matched.map(createProductCard).join("")}
         </div>
-    `;
+      `;
     }
     form.style.display = "none";
   });
